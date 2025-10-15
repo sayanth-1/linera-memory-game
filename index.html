@@ -5,47 +5,151 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linera Microchain Match</title>
 <style>
-  body { font-family: Arial, sans-serif; background: #f0f4f8; color: #333; text-align: center; margin: 0; padding: 0 10px; }
-  h1 { color: #d72c00; font-size: 2.5em; margin-top: 30px; margin-bottom: 5px; }
-  a.handle-link { color: #1DA1F2; text-decoration: none; font-size: 1.1em; }
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: Arial, sans-serif;
+    background: url('wall-wallpaper-concrete-colored-painted-textured-concept.jpg') center center/cover no-repeat fixed;
+    color: #333;
+    text-align: center;
+    min-height: 100vh;
+    transition: background 0.7s;
+    position: relative;
+  }
+  .centered-content {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  h1 {
+    color: #d72c00;
+    font-size: 2.5em;
+    margin-bottom: 0.2em;
+    margin-top: 0;
+    text-shadow: 0 2px 8px #0003;
+  }
+  a.handle-link {
+    color: #1DA1F2;
+    text-decoration: none;
+    font-size: 1.1em;
+    margin-bottom: 24px;
+    display: block;
+    text-shadow: 0 2px 6px #0004;
+  }
   a.handle-link:hover { text-decoration: underline; }
-  #playButton { margin-top: 20px; font-size: 1.1em; padding: 12px 30px; background: #d72c00; color: white; border: none; border-radius: 8px; cursor: pointer; }
+  #playButton {
+    font-size: 1.3em;
+    padding: 15px 38px;
+    background: #d72c00;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0px 6px 18px #0003;
+    margin-top: 38px;
+    margin-bottom: 20px;
+    transition: background 0.2s;
+  }
   #playButton:hover { background: #b02900; }
-  .game-container { display: none; grid-template-columns: repeat(5, 110px); gap: 15px; justify-content: center; margin: 25px auto 15px auto; }
-  .card { width: 110px; height: 150px; background: #1f2937; border-radius: 10px; cursor: pointer; box-shadow: 0 3px 10px rgba(0,0,0,0.17); position: relative; display: flex; align-items: center; justify-content: center; }
-  .card img { width: 100px; height: 140px; display: none; border-radius: 8px; object-fit: contain; }
+
+  .game-container {
+    display: none; 
+    grid-template-columns: repeat(5, 110px); 
+    gap: 15px; 
+    justify-content: center; 
+    margin: 25px auto 15px auto;
+    background: rgba(255,255,255,0.10);
+    padding: 20px 16px 35px 16px;
+    border-radius: 20px;
+    box-shadow: 0 1px 20px #0002;
+  }
+  .card { 
+    width: 110px; 
+    height: 150px; 
+    background: #1f2937; 
+    border-radius: 10px; 
+    cursor: pointer; 
+    box-shadow: 0 3px 10px rgba(0,0,0,0.17); 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+  }
+  .card img { 
+    width: 100px; 
+    height: 140px; 
+    display: none; 
+    border-radius: 8px; 
+    object-fit: contain; 
+  }
   .card.flipped img { display: block; }
   .card.flipped { background: #fff0ee; }
-  .stats, .leaderboard { margin: 10px auto 25px auto; max-width: 600px; }
+  .stats, .leaderboard { 
+    margin: 10px auto 25px auto; 
+    max-width: 600px; 
+    text-shadow: 0 2px 4px #0003;
+  }
   .stats { font-size: 1.2em; }
-  button.restart { padding: 8px 18px; font-size: 1em; background: #d72c00; color: #fff; border: none; border-radius: 6px; cursor: pointer; }
-  table { margin: 10px auto; border-collapse: collapse; min-width: 320px; background: #fff; border-radius: 10px; }
-  th, td { padding: 7px 18px; border: 1px solid #e3e3e3; font-size: 1em; }
+  button.restart { 
+    padding: 8px 18px; 
+    font-size: 1em; 
+    background: #d72c00; 
+    color: #fff; 
+    border: none; 
+    border-radius: 6px; 
+    cursor: pointer; 
+    margin-left: 16px;
+  }
+  table { 
+    margin: 10px auto; 
+    border-collapse: collapse; 
+    min-width: 320px; 
+    background: #fff; 
+    border-radius: 10px; 
+    box-shadow: 0 2px 12px #0001;
+  }
+  th, td { 
+    padding: 7px 18px; 
+    border: 1px solid #e3e3e3; 
+    font-size: 1em; 
+  }
   th { background: #d72c00; color: #fff; }
 </style>
 </head>
 <body>
 
-<h1>Linera Microchain Match</h1>
-<a class="handle-link" href="https://x.com/0xAlpha_Hub" target="_blank" rel="noopener noreferrer">by @0xAlpha_Hub</a>
-<br>
-<button id="playButton">Play</button>
-
-<div class="stats" id="stats" style="display:none;">
-  <span id="score">Score: 0</span>
-  <button class="restart" onclick="restartGame()">Restart</button>
+<div id="welcomeScreen" class="centered-content">
+  <h1>Linera Microchain Match</h1>
+  <a class="handle-link" href="https://x.com/0xAlpha_Hub" target="_blank" rel="noopener noreferrer">by @0xAlpha_Hub</a>
+  <button id="playButton">Play</button>
 </div>
-<div class="game-container" id="game"></div>
 
-<div class="leaderboard" id="leaderboardSection" style="display:none;">
-  <h2>Leaderboard</h2>
-  <table id="leaderboard">
-    <thead><tr><th>Name</th><th>Score</th></tr></thead>
-    <tbody></tbody>
-  </table>
+<div style="display:none;">
+  <div class="stats" id="stats" style="margin-top:26px;">
+    <span id="score">Score: 0</span>
+    <button class="restart" onclick="restartGame()">Restart</button>
+  </div>
+  <div class="game-container" id="game"></div>
+  <div class="leaderboard" id="leaderboardSection">
+    <h2>Leaderboard</h2>
+    <table id="leaderboard">
+      <thead><tr><th>Name</th><th>Score</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
 </div>
 
 <script>
+  // This variable for referencing both images for backgrounds
+  const WELCOME_BG = "wall-wallpaper-concrete-colored-painted-textured-concept.jpg";
+  const GAME_BG = "3d-render-grunge-style-interior-design.jpg";
+
   const imageSources = [
     "linera_white_logo_asym_outline_red_background.jpg",
     "microchains_white.jpg",
@@ -60,6 +164,136 @@
   }));
   let gameGrid, score, firstCard, secondCard, lockBoard, matchedPairs;
 
-  const playBtn = document
+  const playBtn = document.getElementById('playButton');
+  const welcomeScreen = document.getElementById('welcomeScreen');
+  const statsDiv = document.getElementById('stats');
+  const gameContainer = document.getElementById('game');
+  const leaderboardSection = document.getElementById('leaderboardSection');
 
+  // Helper to show/hide main UI areas and change bg on phase switch
+  function showGameInterface() {
+    document.body.style.background = `url('${GAME_BG}') center center/cover no-repeat fixed`;
+    welcomeScreen.style.display = "none";
+    statsDiv.parentElement.style.display = "";
+    statsDiv.style.display = "block";
+    gameContainer.style.display = "grid";
+    leaderboardSection.style.display = "block";
+  }
 
+  playBtn.onclick = () => {
+    showGameInterface();
+    createBoard();
+  };
+
+  function shuffle(array) {
+    return array.sort(() => 0.5 - Math.random());
+  }
+
+  function createBoard() {
+    gameGrid = shuffle(cardsArray.concat(cardsArray));
+    gameContainer.innerHTML = "";
+    gameGrid.forEach((card, index) => {
+      const cardElement = document.createElement('div');
+      cardElement.classList.add('card');
+      cardElement.dataset.name = card.name;
+      cardElement.dataset.index = index;
+
+      const imgElement = document.createElement('img');
+      imgElement.src = card.img;
+      imgElement.alt = "Linera image";
+
+      cardElement.appendChild(imgElement);
+      cardElement.addEventListener('click', flipCard);
+      gameContainer.appendChild(cardElement);
+    });
+    score = 0;
+    matchedPairs = 0;
+    firstCard = null;
+    secondCard = null;
+    lockBoard = false;
+    updateScore();
+  }
+
+  function flipCard() {
+    if (lockBoard) return;
+    if (this.classList.contains('flipped')) return;
+
+    this.classList.add('flipped');
+    if (!firstCard) {
+      firstCard = this;
+      return;
+    }
+    secondCard = this;
+
+    lockBoard = true;
+    if (firstCard.dataset.name === secondCard.dataset.name) {
+      matchedPairs++;
+      score += 5;
+      updateScore();
+      resetTurn();
+      if (matchedPairs === cardsArray.length) {
+        setTimeout(gameWon, 600);
+      }
+    } else {
+      score -= 2;
+      updateScore();
+      setTimeout(() => {
+        firstCard.classList.remove('flipped');
+        secondCard.classList.remove('flipped');
+        resetTurn();
+      }, 1200);
+    }
+  }
+
+  function resetTurn() {
+    [firstCard, secondCard] = [null, null];
+    lockBoard = false;
+  }
+
+  function updateScore() {
+    document.getElementById("score").textContent = "Score: " + score;
+  }
+
+  function restartGame() {
+    createBoard();
+  }
+
+  function gameWon() {
+    let player = prompt("Congrats! You've matched all Linera cards! Enter your name for the leaderboard:");
+    if (!player) player = "Anonymous";
+    addScoreToLeaderboard(player, score);
+    createBoard();
+  }
+
+  function addScoreToLeaderboard(name, score) {
+    let scores = JSON.parse(localStorage.getItem("lineraLeaderboard")) || [];
+    scores.push({ name, score });
+    scores.sort((a, b) => b.score - a.score);
+    scores = scores.slice(0, 10);
+    localStorage.setItem("lineraLeaderboard", JSON.stringify(scores));
+    displayLeaderboard();
+  }
+
+  function displayLeaderboard() {
+    let scores = JSON.parse(localStorage.getItem("lineraLeaderboard")) || [];
+    const tableBody = document.querySelector("#leaderboard tbody");
+    tableBody.innerHTML = "";
+    scores.forEach((row) => {
+      let tr = document.createElement("tr");
+      let tdName = document.createElement("td");
+      tdName.textContent = row.name;
+      let tdScore = document.createElement("td");
+      tdScore.textContent = row.score;
+      tr.appendChild(tdName);
+      tr.appendChild(tdScore);
+      tableBody.appendChild(tr);
+    });
+  }
+
+  // Ensure background is set for welcome screen at load
+  document.body.style.background = `url('${WELCOME_BG}') center center/cover no-repeat fixed`;
+  displayLeaderboard();
+</script>
+
+</body>
+</html>
