@@ -146,7 +146,7 @@
   <div class="leaderboard" id="leaderboardSection">
     <h2>Leaderboard</h2>
     <table id="leaderboard">
-      <thead><tr><th>Name</th><th>Score</th></tr></thead>
+      <thead><tr><th>#</th><th>Name</th><th>Score</th></tr></thead>
       <tbody></tbody>
     </table>
   </div>
@@ -272,7 +272,11 @@
 
   function addScoreToLeaderboard(name, score) {
     let scores = JSON.parse(localStorage.getItem("lineraLeaderboard")) || [];
-    scores.push({ name, score });
+    if (typeof score === 'number' && !isNaN(score)) {
+      scores.push({ name, score });
+    }
+    // Remove any entries with undefined/null/NaN score
+    scores = scores.filter(e => typeof e.score === 'number' && !isNaN(e.score));
     scores.sort((a, b) => b.score - a.score);
     scores = scores.slice(0, 10);
     localStorage.setItem("lineraLeaderboard", JSON.stringify(scores));
@@ -281,14 +285,20 @@
 
   function displayLeaderboard() {
     let scores = JSON.parse(localStorage.getItem("lineraLeaderboard")) || [];
+    // Remove any entries with undefined/null/NaN score
+    scores = scores.filter(e => typeof e.score === 'number' && !isNaN(e.score));
+    scores.sort((a, b) => b.score - a.score);
     const tableBody = document.querySelector("#leaderboard tbody");
     tableBody.innerHTML = "";
-    scores.forEach((row) => {
+    scores.forEach((row, idx) => {
       let tr = document.createElement("tr");
+      let tdNum = document.createElement("td");
+      tdNum.textContent = (idx + 1) + ".";
       let tdName = document.createElement("td");
       tdName.textContent = row.name;
       let tdScore = document.createElement("td");
       tdScore.textContent = row.score;
+      tr.appendChild(tdNum);
       tr.appendChild(tdName);
       tr.appendChild(tdScore);
       tableBody.appendChild(tr);
